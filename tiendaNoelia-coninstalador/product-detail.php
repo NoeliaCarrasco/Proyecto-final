@@ -25,7 +25,6 @@ include_once("./db_configuration.php");
 		$id_producto = $_REQUEST['i'];
 	}
 	
-	$mysqli = new mysqli($db_host, $db_user, $db_password, "deportes");
 
 	/* comprobar la conexión */
 	if (mysqli_connect_errno()) {
@@ -36,7 +35,7 @@ include_once("./db_configuration.php");
 	$consulta = "SELECT productos.*, categorias.NOMBRE AS 'NOMBRE_CATEGORIA' FROM productos, categorias WHERE productos.IDCATEGORIA = categorias.IDCATEGORIA AND productos.IDPRODUCTO ='".$id_producto."';";
 
 	$producto = '';
-	if ($resultado = $mysqli->query($consulta)) {
+	if ($resultado = $connection->query($consulta)) {
 		if($resultado->num_rows > 0){
 		/* liberar el conjunto de resultados */
 			$producto = $resultado->fetch_assoc();
@@ -44,7 +43,6 @@ include_once("./db_configuration.php");
 		$resultado->close();
 	}
 
-	$mysqli = new mysqli($db_host, $db_user, $db_password, "deportes");
 
 	
 	if (mysqli_connect_errno()) {
@@ -54,7 +52,7 @@ include_once("./db_configuration.php");
 
 	$consulta = "SELECT * FROM categorias ORDER BY IDCATEGORIA";
 	$categorias = [];
-	if ($resultado = $mysqli->query($consulta)) {
+	if ($resultado = $connection->query($consulta)) {
 		if($resultado->num_rows > 0){
 			while ( $fila = $resultado->fetch_assoc() ) {//mientras fila no sea nulo guardo en ella los campos que me de la consulta como un array asociativo que luego guardare en el array categorias
 				array_push($categorias, $fila);
@@ -64,7 +62,7 @@ include_once("./db_configuration.php");
 	}
 
 	
-	$mysqli->close();
+	$connection->close();
 ?>
 
 <!DOCTYPE html>

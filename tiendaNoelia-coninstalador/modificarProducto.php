@@ -25,7 +25,6 @@ include_once("./db_configuration.php");
 	
 	
 	
-	$mysqli = new mysqli($db_host, $db_user, $db_password, "deportes");
 
 	/* comprobar la conexión */
 	if (mysqli_connect_errno()) {//si coneccion con la base de datos da error entonces
@@ -37,7 +36,7 @@ include_once("./db_configuration.php");
 	}
 	$consulta = "SELECT * FROM productos WHERE IDPRODUCTO = '".$_REQUEST['i']."' ORDER BY IDPRODUCTO";
 	$producto_elegido = null;
-	if ($resultado = $mysqli->query($consulta)) {
+	if ($resultado = $connection->query($consulta)) {
 		if($resultado->num_rows > 0){
 			$producto_elegido = $resultado->fetch_assoc();//dentro de la variable usuario_conectado guardamos los campos del usuario como un array asociativo 
 		}
@@ -47,7 +46,7 @@ include_once("./db_configuration.php");
 
 	$consulta = "SELECT * FROM categorias ORDER BY IDCATEGORIA";
 	$categorias = [];
-	if ($resultado = $mysqli->query($consulta)) {
+	if ($resultado = $connection->query($consulta)) {
 		if($resultado->num_rows > 0){
 			while ( $fila = $resultado->fetch_assoc() ) {
 				array_push($categorias, $fila);
@@ -57,7 +56,7 @@ include_once("./db_configuration.php");
 	}
 
 	
-	$mysqli->close();
+	$connection->close();
 ?>
 
 <!DOCTYPE html>

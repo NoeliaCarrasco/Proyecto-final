@@ -49,7 +49,7 @@ include_once("./db_configuration.php");
     }
         
 	
-		$connection = new mysqli($db_host, $db_user, $db_password, "deportes");//creamos una instancia de la clase mysqli en la variable connection con los parametros $db_host, db_user, db_password, deportes
+		$connection = new mysqli($db_host, $db_user, $db_password, $database);//creamos una instancia de la clase mysqli en la variable connection con los parametros $db_host, db_user, db_password, deportes
         $query = "SELECT pr.IDPRODUCTO AS Producto, p.IDPEDIDO AS Pedido, p.FECHA_ALTA AS Enviado, c.NOMBRE AS Articulo, pr.NOMBRE AS Tipo, dp.CANTIDAD AS Cantidad, dp.IMPORTE AS PRECIO, (dp.CANTIDAD * dp.IMPORTE) AS Total FROM detallespedido dp, categorias c, pedidos p, productos pr WHERE c.IDCATEGORIA =                   pr.IDCATEGORIA AND p.IDPEDIDO = ".$idpedido." AND p.IDPEDIDO = dp.IDPEDIDO AND dp.IDPRODUCTO = pr.IDPRODUCTO";// la variable query va a almacenar la consulta que vamos a realizar
 		$detallespedidos=$connection->query($query);//iniciamos la query dentro de la varriable detallespedidos
         $detallepedido=null;//la variable detallespedido se inicia como nula
@@ -67,8 +67,6 @@ include_once("./db_configuration.php");
           */
         }while($detallepedido=$detallespedidos->fetch_object());//cuando no quedan mas lineas de datos que coger se cierra el bucle asignandole a la variable detallepedido un objecto de la variable detallespedidos
 
-$mysqli = new mysqli($db_host, $db_user, $db_password, "deportes");
-
 	
 	if (mysqli_connect_errno()) {
 		printf("Falló la conexión: %s\n", mysqli_connect_error());
@@ -77,7 +75,7 @@ $mysqli = new mysqli($db_host, $db_user, $db_password, "deportes");
 
 	$consulta = "SELECT * FROM categorias ORDER BY IDCATEGORIA";
 	$categorias = [];
-	if ($resultado = $mysqli->query($consulta)) {
+	if ($resultado = $connection->query($consulta)) {
 		if($resultado->num_rows > 0){
 			while ( $fila = $resultado->fetch_assoc() ) {
 				array_push($categorias, $fila);
@@ -87,7 +85,7 @@ $mysqli = new mysqli($db_host, $db_user, $db_password, "deportes");
 	}
 
 	
-	$mysqli->close();
+	$connection->close();
 
 ?>
 

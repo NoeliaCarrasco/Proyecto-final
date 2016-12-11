@@ -21,7 +21,6 @@
 		$edad = 0;
 	}
 
-$mysqli = new mysqli($db_host, $db_user, $db_password, "deportes");
 
 	
 	if (mysqli_connect_errno()) {
@@ -31,7 +30,7 @@ $mysqli = new mysqli($db_host, $db_user, $db_password, "deportes");
 
 	$consulta = "SELECT * FROM categorias ORDER BY IDCATEGORIA";
 	$categorias = [];
-	if ($resultado = $mysqli->query($consulta)) {
+	if ($resultado = $connection->query($consulta)) {
 		if($resultado->num_rows > 0){
 			while ( $fila = $resultado->fetch_assoc() ) {
 				array_push($categorias, $fila);
@@ -41,7 +40,7 @@ $mysqli = new mysqli($db_host, $db_user, $db_password, "deportes");
 	}
 
 	
-	$mysqli->close();
+	$connection->close();
 ?>
 
 <!DOCTYPE html>

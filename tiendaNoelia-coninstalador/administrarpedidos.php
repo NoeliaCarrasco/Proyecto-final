@@ -23,7 +23,7 @@ include_once("./db_configuration.php");
 	
 	
 	
-    $connection = new mysqli($db_host, $db_user, $db_password, "deportes");//creamos una instancia de la clase mysqli en la variable connection con los parametros $db_host, db_user, db_password, deportes
+    $connection = new mysqli($db_host, $db_user, $db_password, $database);//creamos una instancia de la clase mysqli en la variable connection con los parametros $db_host, db_user, db_password, deportes
     $query = "";//declaramos la variable query con valor vacio
     if(isset($_SESSION['rol']) && intval($_SESSION['rol']) == 2){//si existe la variable rol y tiene valor entero igual 2 'administrador' entonces
         $query = "SELECT p.idpedido as Pedido, u.usuario as Usuario, p.fecha_alta as Fecha, sum(dp.CANTIDAD*dp.IMPORTE) as Total FROM pedidos p,             detallespedido dp, usuarios u WHERE p.IDUSUARIO = u.IDUSUARIO AND dp.IDPEDIDO = p.IDPEDIDO GROUP BY p.IDPEDIDO ORDER BY u.USUARIO,                   p.FECHA_ALTA DESC;";//almacenamos en la variable query la consulta que coge todos los pedidos 
@@ -41,7 +41,6 @@ include_once("./db_configuration.php");
 
 
 
-$mysqli = new mysqli($db_host, $db_user, $db_password, "deportes");
 
 	
 	if (mysqli_connect_errno()) {
@@ -51,7 +50,7 @@ $mysqli = new mysqli($db_host, $db_user, $db_password, "deportes");
 
 	$consulta = "SELECT * FROM categorias ORDER BY IDCATEGORIA";
 	$categorias = [];
-	if ($resultado = $mysqli->query($consulta)) {
+	if ($resultado = $connection->query($consulta)) {
 		if($resultado->num_rows > 0){
 			while ( $fila = $resultado->fetch_assoc() ) {
 				array_push($categorias, $fila);
@@ -61,7 +60,7 @@ $mysqli = new mysqli($db_host, $db_user, $db_password, "deportes");
 	}
 
 	
-	$mysqli->close();
+	$connection->close();
 ?>
 
 <!DOCTYPE html>

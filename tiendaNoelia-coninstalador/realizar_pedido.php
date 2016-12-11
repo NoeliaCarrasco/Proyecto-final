@@ -4,7 +4,7 @@ include_once("./db_configuration.php");
 	if(!isset($_SESSION['rol'])){header('location: login.php');}
 	$id_usuario = '';
 	if(isset($_SESSION['carrito'])){
-		$connection = new mysqli($db_host, $db_user, $db_password, "deportes");
+		$connection = new mysqli($db_host, $db_user, $db_password, $database);
 		$fechaPedido = getdate();//con getdate obtenemos la informacion de la fecha y hora
 		$fechaPedido = $fechaPedido['year']."-".$fechaPedido['mon']."-".$fechaPedido['mday'];//la variable fechapedido contiene la fecha en ese formato
 		if (isset($_SESSION['IDUSUARIO']) && $_SESSION['IDUSUARIO'] != '') {

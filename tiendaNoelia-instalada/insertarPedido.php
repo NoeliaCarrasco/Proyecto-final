@@ -7,7 +7,6 @@ include_once("./db_configuration.php");
         $usuario = $_REQUEST['usuario'];
         $password = $_REQUEST['password'];
         
-       $mysqli = new mysqli($db_host, $db_user, $db_password, "deportes");
 
         /* comprobar la conexión */
         if (mysqli_connect_errno()) {
@@ -17,7 +16,7 @@ include_once("./db_configuration.php");
 
         $consulta = "SELECT * FROM usuarios WHERE USUARIO = '".$usuario."' AND PASSWORD = '".$password."'";
 		
-        if ($resultado = $mysqli->query($consulta)) {//si creamos la query y el resultado de la query y lo guardamos en resultado
+        if ($resultado = $connection->query($consulta)) {//si creamos la query y el resultado de la query y lo guardamos en resultado
             if($resultado->num_rows > 0){//si la variable resultado tiene un numero de filas mayor que 0 entonces
             
                 session_start();//inicia sesion
@@ -31,7 +30,7 @@ include_once("./db_configuration.php");
             $resultado->close();//libera el conjunto de resultados
         }
 
-        $mysqli->close();//cerrar la conexión
+        $connection->close();//cerrar la conexión
     }else{//sino muestrame no se ...
         echo 'No se han introducido datos de conexion<br>';
     }

@@ -3,7 +3,7 @@ include_once("./db_configuration.php");
 	session_start();
 	if(!isset($_SESSION['rol'])){header('location: login.php');}else{if(intval($_SESSION['rol']) != 2){header('location: index.php');}}
 	if(isset($_REQUEST['id'])){
-		$connection = new mysqli($db_host, $db_user, $db_password, "deportes");
+		$connection = new mysqli($db_host, $db_user, $db_password, $database);
 		
 		if($_FILES['fileToUpload']['name'] != ''){$fichero = ", FOTO='".$_FILES['fileToUpload']['name']."'";}else{ $fichero = "";}//si el nombre del fichero es distinto de vacio entonces dentro de la variable fichero guardamos el campo foto siendo igual al nombre del fichero subido sino la variable fichero esta vacia y no mostrara nada
 		$update="UPDATE productos SET NOMBRE = '".$_REQUEST['nombre']."', PRECIO='".floatval($_REQUEST['precio'])."'".$fichero.", STOCK='".intval($_REQUEST['stock'])."', IDCATEGORIA='".$_REQUEST['categoria']."', DESCRIPCION='".$_REQUEST['descripcion']."' WHERE IDPRODUCTO = '".$_REQUEST['id']."'";//creamos dentro de la variable update la consulta para actualizar un producto insertando cada campo de la tabla producto y su valor, nombre = valor, precio = valor cnvertido en un valor float 'decimal', la variable fichero concatena o nada o foto igual a una ruta ( foto = yjdsyf.jpeg), stock = valor convertido en entero, idcategoria = valor, descripcion = valor cuando el idproducto es igual a la clave id de la variable request

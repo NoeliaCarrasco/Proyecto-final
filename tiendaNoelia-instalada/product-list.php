@@ -21,7 +21,6 @@ include_once("./db_configuration.php");
 		$edad = 0;
 	}
 	
-	$mysqli = new mysqli($db_host, $db_user, $db_password, "deportes");
 
 	
 	if (mysqli_connect_errno()) {
@@ -31,7 +30,7 @@ include_once("./db_configuration.php");
 
 	$consulta = "SELECT * FROM categorias ORDER BY IDCATEGORIA";
 	$categorias = [];
-	if ($resultado = $mysqli->query($consulta)) {
+	if ($resultado = $connection->query($consulta)) {
 		if($resultado->num_rows > 0){
 			while ( $fila = $resultado->fetch_assoc() ) {
 				array_push($categorias, $fila);
@@ -42,7 +41,7 @@ include_once("./db_configuration.php");
     
 	$consulta = "SELECT * FROM productos WHERE IDCATEGORIA = '".$categoria."'";
 	$productos = [];
-	if ($resultado = $mysqli->query($consulta)) {
+	if ($resultado = $connection->query($consulta)) {
 		if($resultado->num_rows > 0){
 			while ( $fila = $resultado->fetch_assoc() ) {
 			/* liberar el conjunto de resultados */
@@ -53,7 +52,7 @@ include_once("./db_configuration.php");
 	}
 
 	
-	$mysqli->close();
+	$connection->close();
 ?>
 
 <!DOCTYPE html>

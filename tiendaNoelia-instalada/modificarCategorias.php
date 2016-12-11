@@ -23,7 +23,6 @@ include_once("./db_configuration.php");
 	
 	
 	
-	$mysqli = new mysqli($db_host, $db_user, $db_password, "deportes");
 
 	if (mysqli_connect_errno()) {
 		printf("Falló la conexión: %s\n", mysqli_connect_error());
@@ -34,14 +33,14 @@ include_once("./db_configuration.php");
 	}
 	$consulta = "SELECT * FROM categorias WHERE IDCATEGORIA = '".$_REQUEST['i']."' ORDER BY IDCATEGORIA";
 	$categoria_elegida = null;
-	if ($resultado = $mysqli->query($consulta)) {
+	if ($resultado = $connection->query($consulta)) {
 		if($resultado->num_rows > 0){
 			$categoria_elegida = $resultado->fetch_assoc();
 		}
 		$resultado->close();
 	}
 
-	$mysqli->close();
+	$connection->close();
 ?>
 
 <!DOCTYPE html>

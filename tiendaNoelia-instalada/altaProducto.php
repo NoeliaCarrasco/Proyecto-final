@@ -3,7 +3,7 @@ include_once("./db_configuration.php");
 	session_start();
 	if(!isset($_SESSION['rol'])){header('location: login.php');}else{if(intval($_SESSION['rol']) != 2){header('location: index.php');}}
 	if(isset($_REQUEST['nombre'])&&isset($_REQUEST['categoria'])){
-		$connection = new mysqli($db_host, $db_user, $db_password, "deportes");
+		$connection = new mysqli($db_host, $db_user, $db_password, $database);
 		
 		$insert="INSERT INTO productos VALUES(NULL, '".$_REQUEST['nombre']."', '".$_REQUEST['precio']."', '".intval($_REQUEST['stock'])."', '".$_FILES['fileToUpload']['name']."', '".$_REQUEST['categoria']."', '".$_REQUEST['descripcion']."')";//creamos dentro de la variable insert la consulta para insertar nuevos productos insertandome como parametros el nombre, precio, stock convertido a entero, el nombre del fichero que acabo de subir, categoria y descripcion
 		

@@ -23,8 +23,6 @@ include_once("./db_configuration.php");
 	
 	
 	
-	$mysqli = new mysqli($db_host, $db_user, $db_password, "deportes");//creamos una instancia de la clase mysqli en la variable mysqli con los parametros $db_host, db_user, db_password, deportes
-
 	
 	if (mysqli_connect_errno()) {
 		printf("Falló la conexión: %s\n", mysqli_connect_error());
@@ -33,7 +31,7 @@ include_once("./db_configuration.php");
 
 	$consulta = "SELECT productos.*, categorias.NOMBRE AS CATEGORIA FROM productos, categorias WHERE productos.IDCATEGORIA = categorias.IDCATEGORIA ORDER BY IDPRODUCTO";// la variable consulta va a almacenar la consulta que vamos a realizar
 	$productos_lista = [];//productos_lista se inicia como array
-	if ($resultado = $mysqli->query($consulta)) {//si iniciamos la query dentro de la varriable resultado entonces
+	if ($resultado = $connection->query($consulta)) {//si iniciamos la query dentro de la varriable resultado entonces
 		if($resultado->num_rows > 0){//si la variable resultado tiene un numero de filas mayor que 0 entonces
 			while ( $fila = $resultado->fetch_assoc() ) {//dentro de la variable fila guardamos los campos de un producto como un array asociativo hasta que feth_assoc sea nulo y termine el bucle
 
@@ -45,7 +43,7 @@ include_once("./db_configuration.php");
 
 	$consulta = "SELECT * FROM categorias ORDER BY IDCATEGORIA";
 	$categorias = [];
-	if ($resultado = $mysqli->query($consulta)) {
+	if ($resultado = $connection->query($consulta)) {
 		if($resultado->num_rows > 0){
 			while ( $fila = $resultado->fetch_assoc() ) {
 				array_push($categorias, $fila);
@@ -55,7 +53,7 @@ include_once("./db_configuration.php");
 	}
 
 	
-	$mysqli->close();
+	$connection->close();
 ?>
 
 <!DOCTYPE html>
